@@ -15,12 +15,12 @@
          <children>
             <Pane prefHeight="35.0" prefWidth="210.0" style="-fx-background-color: #EBEBEB; -fx-background-radius: 5; -fx-border-width: 0.5; -fx-border-color: BLACK; -fx-border-radius: 5;">
                <children>
-                  <Button fx:id="buttonFocusTimer" layoutX="15.0" layoutY="4.0" mnemonicParsing="false" style="-fx-background-color: rgba(0, 0, 0, 0); -fx-border-color: BLACK; -fx-border-width: 0.5; -fx-border-radius: 5;" text="focus">
+                  <Button fx:id="buttonFocusTimer" layoutX="15.0" layoutY="4.0" mnemonicParsing="false" onAction="#buttonClick" style="-fx-background-color: rgba(0, 0, 0, 0.1); -fx-border-color: BLACK; -fx-border-width: 0.5; -fx-border-radius: 5;" text="focus">
                      <font>
                         <Font name="Menlo Regular" size="13.0" />
                      </font>
                   </Button>
-                  <Button fx:id="buttonPauseTimer" layoutX="80.0" layoutY="4.0" mnemonicParsing="false" style="-fx-background-color: rgba(0, 0, 0, 0); -fx-border-color: BLACK; -fx-border-width: 0.5; -fx-border-radius: 5;" text="pause">
+                  <Button fx:id="buttonPauseTimer" layoutX="80.0" layoutY="4.0" mnemonicParsing="false" onAction="#buttonClick" style="-fx-background-color: rgba(0, 0, 0, 0); -fx-border-color: BLACK; -fx-border-width: 0.5; -fx-border-radius: 5;" text="pause">
                      <font>
                         <Font name="Menlo Regular" size="13.0" />
                      </font>
@@ -51,23 +51,23 @@
                   <Font name="Menlo Regular" size="25.0" />
                </font>
             </Label>
-            <Button fx:id="buttonStartPauseTimer" layoutX="120.0" layoutY="49.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: rgba(0, 0, 0, 0);" />
-            <ImageView fx:id="iconPauseTimer" fitHeight="25.0" fitWidth="25.0" layoutX="120.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../../../icons/pause.png" />
-               </image>
-            </ImageView>
             <ImageView fx:id="iconStartTimer" fitHeight="20.0" fitWidth="20.0" layoutX="122.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../icons/play.png" />
                </image>
             </ImageView>
-            <Button fx:id="buttonResetTimer" layoutX="155.0" layoutY="49.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: rgba(0, 0, 0, 0);" />
+            <ImageView fx:id="iconPauseTimer" fitHeight="25.0" fitWidth="25.0" layoutX="120.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../../../icons/pause.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="buttonStartPauseTimer" layoutX="120.0" layoutY="49.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonClick" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: rgba(0, 0, 0, 0);" />
             <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="155.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../icons/reset.png" />
                </image>
             </ImageView>
+            <Button fx:id="buttonResetTimer" layoutX="155.0" layoutY="49.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonClick" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: rgba(0, 0, 0, 0);" />
          </children>
       </Pane>
       <Pane fx:id="paneSettingsTimer" layoutX="247.0" layoutY="386.0" prefHeight="90.0" prefWidth="215.0" style="-fx-background-color: rgba(0, 0, 0, 0.1); -fx-background-radius: 5;" visible="false" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="240.0">

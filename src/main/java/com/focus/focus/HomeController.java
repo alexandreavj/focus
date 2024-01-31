@@ -12,7 +12,16 @@ import javafx.scene.layout.Pane;
 import java.io.IOException;
 
 public class HomeController {
+    private enum State {
+        FOCUS,
+        PAUSE
+    }
+
+    private State state;
+
     private Preferences preferences;
+
+    private PomodoroTimer timer;
 
     @FXML
     private Button buttonFocusTimer;
@@ -64,6 +73,7 @@ public class HomeController {
 
     public HomeController() throws IOException {
         this.preferences = new Preferences();
+        this.state = State.FOCUS;
     }
 
     public Preferences getPreferences() {
@@ -89,14 +99,54 @@ public class HomeController {
                     alert.setContentText("The updates will not be saved when you close the app!");
                     alert.showAndWait();
                 }
+                if (this.state == State.FOCUS) {
+                    this.timer.setDefaultDuration(this.preferences.getStudyTime());
+                } else {
+                    this.timer.setDefaultDuration(this.preferences.getPauseTime());
+                }
+                if (!this.timer.isRunning()) {
+                    this.timer.updateUI();
+                }
             }
             this.iconSettingsTimer.setVisible(this.paneSettingsTimer.isVisible());
             this.iconSaveSettingsTimer.setVisible(!this.paneSettingsTimer.isVisible());
             this.paneSettingsTimer.setVisible(!this.paneSettingsTimer.isVisible());
+        } else if (event.getSource() == this.buttonStartPauseTimer) {
+            if (this.iconStartTimer.isVisible()) {
+                this.timer.startTimer();
+            } else {
+                this.timer.pauseTimer();
+            }
+            this.iconStartTimer.setVisible(!this.iconStartTimer.isVisible());
+            this.iconPauseTimer.setVisible(!this.iconPauseTimer.isVisible());
+        } else if (event.getSource() == this.buttonResetTimer) {
+            this.timer.resetTimer();
+            this.iconStartTimer.setVisible(true);
+            this.iconPauseTimer.setVisible(false);
+        } else if (event.getSource() == this.buttonFocusTimer && this.state != State.FOCUS) {
+            this.buttonFocusTimer.setStyle("-fx-background-color: rgba(0, 0, 0, 0.1); -fx-border-color: BLACK; -fx-border-width: 0.5; -fx-border-radius: 5;");
+            this.buttonPauseTimer.setStyle("-fx-background-color: rgba(0, 0, 0, 0); -fx-border-color: BLACK; -fx-border-width: 0.5; -fx-border-radius: 5;");
+            this.state = State.FOCUS;
+            this.timer.setDefaultDuration(this.preferences.getStudyTime());
+            this.timer.resetTimer();
+            this.timer.updateUI();
+        } else if (event.getSource() == this.buttonPauseTimer && this.state != State.PAUSE) {
+            this.buttonFocusTimer.setStyle("-fx-background-color: rgba(0, 0, 0, 0); -fx-border-color: BLACK; -fx-border-width: 0.5; -fx-border-radius: 5;");
+            this.buttonPauseTimer.setStyle("-fx-background-color: rgba(0, 0, 0, 0.1); -fx-border-color: BLACK; -fx-border-width: 0.5; -fx-border-radius: 5;");
+            this.state = State.PAUSE;
+            this.timer.setDefaultDuration(this.preferences.getPauseTime());
+            this.timer.resetTimer();
+            this.timer.updateUI();
         }
     }
 
     public void initialize() {
+        this.timer = new PomodoroTimer(this.preferences.getStudyTime(), this.labelMinutesTimer, this.labelSecondsTimer);
+        this.sliderFocusTime.setValue(this.preferences.getStudyTime());
+        this.sliderPauseTime.setValue(this.preferences.getPauseTime());
+        this.labelFocusSlider.setText(String.valueOf(this.preferences.getStudyTime()));
+        this.labelPauseSlider.setText(String.valueOf(this.preferences.getPauseTime()));
+        this.labelMinutesTimer.setText(String.valueOf(this.preferences.getStudyTime()));
         this.sliderFocusTime.valueProperty().addListener((observableValue, number, t1) -> {
             int newValue = (int) sliderFocusTime.getValue();
             if (newValue % 5 == 0) {
