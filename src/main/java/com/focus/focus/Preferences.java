@@ -7,7 +7,7 @@ public class Preferences implements Serializable {
 
     private int pauseTime;
 
-    private transient String path;
+    private final transient String path;
 
     public Preferences() throws IOException {
         File prefFile;
@@ -64,10 +64,6 @@ public class Preferences implements Serializable {
 
     public void setPauseTime(int pauseTime) {
         this.pauseTime = pauseTime;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 
     private void loadPreferencesFile() throws IOException, ClassNotFoundException {
