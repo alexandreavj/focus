@@ -96,5 +96,29 @@
             </Label>
          </children>
       </Pane>
+      <Pane layoutX="586.0" layoutY="14.0" prefHeight="100.0" prefWidth="175.0" style="-fx-background-color: rgba(0, 0, 0, 0.05); -fx-background-radius: 5;" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+         <children>
+            <Label alignment="CENTER" layoutX="7.0" layoutY="7.0" prefWidth="57.0" style="-fx-background-color: rgba(0, 0, 0, 0.1); -fx-background-radius: 5;" text="fortune" textAlignment="CENTER">
+               <font>
+                  <Font name="Menlo Regular" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <ImageView fx:id="speechBalloonClock" fitHeight="51.0" fitWidth="84.0" layoutX="63.0" layoutY="411.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../../../speech_balloon.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="labelClock" layoutX="79.0" layoutY="423.0" text="00:00" visible="false">
+         <font>
+            <Font name="Menlo Regular" size="15.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="pusheen" fitHeight="75.0" fitWidth="75.0" layoutX="20.0" layoutY="437.0" onMouseEntered="#mouseEnter" onMouseExited="#mouseExit" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="88.0" AnchorPane.leftAnchor="20.0">
+         <image>
+            <Image url="@../../../pusheen.gif" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

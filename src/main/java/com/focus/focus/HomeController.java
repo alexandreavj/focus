@@ -7,9 +7,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
+import java.time.LocalTime;
+import java.util.Calendar;
 
 public class HomeController {
     private enum State {
@@ -70,6 +73,15 @@ public class HomeController {
 
     @FXML
     private ImageView iconStartTimer;
+
+    @FXML
+    private ImageView pusheen;
+
+    @FXML
+    private ImageView speechBalloonClock;
+
+    @FXML
+    private Label labelClock;
 
     public HomeController() throws IOException {
         this.preferences = new Preferences();
@@ -133,6 +145,23 @@ public class HomeController {
             this.timer.updateUI();
             this.iconPauseTimer.setVisible(false);
             this.iconStartTimer.setVisible(true);
+        }
+    }
+
+    @FXML
+    private void mouseEnter(MouseEvent event) {
+        if (event.getSource() == this.pusheen) {
+            this.speechBalloonClock.setVisible(true);
+            this.labelClock.setText(String.format("%02d:%02d", LocalTime.now().getHour(), LocalTime.now().getMinute()));
+            this.labelClock.setVisible(true);
+        }
+    }
+
+    @FXML
+    private void mouseExit(MouseEvent event) {
+        if (event.getSource() == this.pusheen) {
+            this.speechBalloonClock.setVisible(false);
+            this.labelClock.setVisible(false);
         }
     }
 
