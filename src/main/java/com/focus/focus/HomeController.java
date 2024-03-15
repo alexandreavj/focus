@@ -20,6 +20,63 @@ public class HomeController {
         PAUSE
     }
 
+    private static final String[] QUOTES = {
+            "Believe you can and you're halfway there.",
+            "The only way to do great work is to love what you do.",
+            "Push yourself, because no one else is going to do it for you.",
+            "Failure will never overtake me if my determination to succeed is strong enough.",
+            "The harder you work for something, the greater you'll feel when you achieve it.",
+            "It does not matter how slowly you go, as long as you do not stop.",
+            "Dream big and dare to fail.",
+            "The only limit to our realization of tomorrow will be our doubts of today.",
+            "Don't watch the clock; do what it does. Keep going.",
+            "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+            "You are never too old to set another goal or to dream a new dream.",
+            "It always seems impossible until it is done.",
+            "Your limitation—it's only your imagination.",
+            "Success doesn’t just find you. You have to go out and get it.",
+            "The key to success is to focus on goals, not obstacles.",
+            "The only way to achieve the impossible is to believe it is possible.",
+            "Your limitation—it’s only your imagination.",
+            "Push yourself, because no one else is going to do it for you.",
+            "Great things never come from comfort zones.",
+            "Dream it. Wish it. Do it.",
+            "Success doesn’t just find you. You have to go out and get it.",
+            "The harder you work for something, the greater you’ll feel when you achieve it.",
+            "Dream bigger. Do bigger.",
+            "Don’t stop when you’re tired. Stop when you’re done.",
+            "Wake up with determination. Go to bed with satisfaction.",
+            "Do something today that your future self will thank you for.",
+            "Little things make big days.",
+            "It’s going to be hard, but hard does not mean impossible.",
+            "Don’t wait for opportunity. Create it.",
+            "Sometimes we’re tested not to show our weaknesses, but to discover our strengths.",
+            "The key to success is to focus on goals, not obstacles.",
+            "Dream it. Wish it. Do it.",
+            "Success doesn’t just find you. You have to go out and get it.",
+            "The harder you work for something, the greater you’ll feel when you achieve it.",
+            "Dream bigger. Do bigger.",
+            "Don’t stop when you’re tired. Stop when you’re done.",
+            "Wake up with determination. Go to bed with satisfaction.",
+            "Do something today that your future self will thank you for.",
+            "Little things make big days.",
+            "It’s going to be hard, but hard does not mean impossible.",
+            "Don’t wait for opportunity. Create it.",
+            "Sometimes we’re tested not to show our weaknesses, but to discover our strengths.",
+            "The key to success is to focus on goals, not obstacles.",
+            "Dream it. Wish it. Do it.",
+            "Success doesn’t just find you. You have to go out and get it.",
+            "The harder you work for something, the greater you’ll feel when you achieve it.",
+            "Dream bigger. Do bigger.",
+            "Don’t stop when you’re tired. Stop when you’re done.",
+            "Wake up with determination. Go to bed with satisfaction.",
+            "Do something today that your future self will thank you for.",
+            "Little things make big days.",
+            "It’s going to be hard, but hard does not mean impossible.",
+            "Don’t wait for opportunity. Create it.",
+            "Sometimes we’re tested not to show our weaknesses, but to discover our strengths."
+    };
+
     private State state;
 
     private final Preferences preferences;
@@ -52,6 +109,9 @@ public class HomeController {
 
     @FXML
     private Label labelSecondsTimer;
+
+    @FXML
+    private Label labelFortune;
 
     @FXML
     private Pane paneSettingsTimer;
@@ -184,5 +244,6 @@ public class HomeController {
                 labelPauseSlider.setText(String.valueOf(newValue));
             }
         });
+        this.labelFortune.setText(QUOTES[(int) Math.round(Math.random() * QUOTES.length)]);
     }
 }
