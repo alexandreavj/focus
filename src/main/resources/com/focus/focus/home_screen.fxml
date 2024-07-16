@@ -22,7 +22,8 @@
                         <Font name="Courier New" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="settingsTimer" layoutX="196.0" layoutY="3.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" />
+                  <Button fx:id="openSettingsTimer" layoutX="196.0" layoutY="3.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" />
+                  <Button fx:id="saveSettingsTimer" layoutX="196.0" layoutY="3.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" />
                </children></Pane>
             <Label layoutX="15.0" layoutY="45.0" text="00:00">
                <font>
