@@ -11,7 +11,7 @@ public class Focus extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Focus.class.getResource("home_screen.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         stage.setTitle("focus: home");
         stage.setScene(scene);
         stage.show();

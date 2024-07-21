@@ -4,15 +4,18 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class PomodoroTimer {
-    private final Timer timer = new Timer();
+    private Timer timer;
 
     private int secondsBeginning;
 
     private int secondsRemaining;
 
+
     public PomodoroTimer(int secondsBeginning) {
+        this.timer = new Timer();
         this.secondsBeginning = this.secondsRemaining = secondsBeginning;
     }
+
 
     public int getSecondsBeginning() {
         return secondsBeginning;
@@ -31,7 +34,9 @@ public class PomodoroTimer {
     }
 
     public void start() {
-        timer.scheduleAtFixedRate(new TimerTask() {
+        this.timer = new Timer();
+
+        this.timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 secondsRemaining -= 1;
                 if (secondsRemaining == 0) {
