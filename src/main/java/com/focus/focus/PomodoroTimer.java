@@ -3,11 +3,10 @@ package com.focus.focus;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.control.Label;
 import javafx.util.Duration;
 
 public class PomodoroTimer {
-    private final Label timerLabel;
+    private final Controller controller;
 
     private Timeline timeline;
 
@@ -16,9 +15,9 @@ public class PomodoroTimer {
     private int secondsRemaining;
 
 
-    public PomodoroTimer(int secondsBeginning, Label timerLabel) {
+    public PomodoroTimer(int secondsBeginning, Controller controller) {
         this.secondsBeginning = this.secondsRemaining = secondsBeginning;
-        this.timerLabel = timerLabel;
+        this.controller = controller;
     }
 
 
@@ -45,9 +44,7 @@ public class PomodoroTimer {
             this.updateTimerLabel();
 
             if (this.secondsRemaining <= 0) {
-                this.secondsRemaining = this.secondsBeginning;
-                this.updateTimerLabel();
-                this.timeline.stop();
+                this.controller.resetTimerHandler();
             }
         }));
 
@@ -69,6 +66,7 @@ public class PomodoroTimer {
     }
 
     private void updateTimerLabel() {
-        this.timerLabel.setText(String.format("%02d:%02d", this.secondsRemaining / 60, this.secondsRemaining % 60));
+        this.controller.getTimerLabel().setText(String.format(
+                "%02d:%02d", this.secondsRemaining / 60, this.secondsRemaining % 60));
     }
 }

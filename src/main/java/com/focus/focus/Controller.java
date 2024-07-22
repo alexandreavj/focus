@@ -48,6 +48,10 @@ public class Controller implements Initializable {
 
     private PomodoroTimer pomodoroTimer;
 
+    public Label getTimerLabel() {
+        return timerLabel;
+    }
+
 
     public void startTimerHandler() {
         this.startTimer.setDisable(true);
@@ -78,6 +82,7 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.pomodoroTimer = new PomodoroTimer(30, timerLabel);
+        this.pomodoroTimer = new PomodoroTimer(50 * 60, this);
+        this.resetTimerHandler();
     }
 }
