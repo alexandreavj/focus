@@ -33,9 +33,54 @@ public class Controller implements Initializable {
     private Button pauseTimer;
 
     /**
+     * GUI button to switch pomodoro timer to focus mode.
+     */
+    @FXML
+    private Button focusPomodoro;
+
+    /**
+     * GUI button to switch pomodoro timer to break mode.
+     */
+    @FXML
+    private Button breakPomodoro;
+
+    /**
+     * Button style enumeration - used to style the buttons.
+     */
+    private enum ButtonStyle {
+        SELECTED("-fx-background-color: rgba(0, 0, 0, 0.1);"
+                + "-fx-border-color: BLACK;"
+                + "-fx-border-width: 1px;"
+                + "-fx-border-radius: 3px;"
+        ),
+        UNSELECTED("-fx-background-color: rgba(0, 0, 0, 0.0);"
+                 + "-fx-border-color: BLACK;"
+                 + "-fx-border-width: 1px;"
+                 + "-fx-border-radius: 3px;"
+        );
+
+        private final String style;
+
+        ButtonStyle(String style) {
+            this.style = style;
+        }
+    }
+
+    /**
      * Pomodoro timer instance - handles timer operations.
      */
     private PomodoroTimer pomodoroTimer;
+
+    /**
+     * Duration in seconds for the focus timer.
+     */
+    private int focusDuration = 50 * 60;
+
+    /**
+     * Duration in seconds for the break timer.
+     */
+    private int breakDuration = 20 * 60;
+
 
     /**
      * Get timer label object - useful for PomodoroTimer class.
@@ -83,13 +128,35 @@ public class Controller implements Initializable {
     }
 
     /**
+     * Switches pomodoro timer to focus mode.
+     */
+    public void focusTimerHandler() {
+        this.focusPomodoro.setStyle(ButtonStyle.SELECTED.style);
+        this.breakPomodoro.setStyle(ButtonStyle.UNSELECTED.style);
+
+        this.pomodoroTimer.setSecondsBeginning(this.focusDuration);
+        this.resetTimerHandler();
+    }
+
+    /**
+     * Switches pomodoro timer to break mode.
+     */
+    public void breakTimerHandler() {
+        this.breakPomodoro.setStyle(ButtonStyle.SELECTED.style);
+        this.focusPomodoro.setStyle(ButtonStyle.UNSELECTED.style);
+
+        this.pomodoroTimer.setSecondsBeginning(this.breakDuration);
+        this.resetTimerHandler();
+    }
+
+    /**
      * Initialize the controller.
      * @param location URL location.
      * @param resources Resource bundle.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.pomodoroTimer = new PomodoroTimer(50 * 60, this);
-        this.resetTimerHandler();
+        this.pomodoroTimer = new PomodoroTimer(this.focusDuration, this);
+        this.focusTimerHandler();
     }
 }

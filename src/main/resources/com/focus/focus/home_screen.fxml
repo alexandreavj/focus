@@ -15,12 +15,12 @@
          <children>
             <Pane prefHeight="30.0" prefWidth="235.0" style="-fx-border-color: BLACK; -fx-border-radius: 7;">
                <children>
-                  <Button fx:id="focusPomodoro" layoutX="15.0" layoutY="3.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="64.0" style="-fx-background-color: rgba(0, 0, 0, 0); -fx-border-color: BLACK; -fx-border-radius: 3; -fx-border-width: 0.5;" text="focus">
+                  <Button fx:id="focusPomodoro" layoutX="15.0" layoutY="3.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#focusTimerHandler" prefHeight="24.0" prefWidth="64.0" style="-fx-background-color: rgba(0, 0, 0, 0.1); -fx-border-color: BLACK; -fx-border-radius: 3; -fx-border-width: 1;" text="focus">
                      <font>
                         <Font name="Courier New" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="breakPomodoro" layoutX="85.0" layoutY="3.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="64.0" style="-fx-background-color: rgba(0, 0, 0, 0); -fx-border-color: BLACK; -fx-border-radius: 3; -fx-border-width: 0.5;" text="break">
+                  <Button fx:id="breakPomodoro" layoutX="85.0" layoutY="3.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#breakTimerHandler" prefHeight="24.0" prefWidth="64.0" style="-fx-background-color: rgba(0, 0, 0, 0); -fx-border-color: BLACK; -fx-border-radius: 3; -fx-border-width: 1;" text="break">
                      <font>
                         <Font name="Courier New" size="14.0" />
                      </font>
@@ -29,7 +29,7 @@
                   <Button fx:id="saveSettingsTimer" layoutX="196.0" layoutY="3.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" />
                </children>
             </Pane>
-            <Label fx:id="timerLabel" layoutX="15.0" layoutY="45.0" text="00:00">
+            <Label fx:id="timerLabel" layoutX="15.0" layoutY="45.0" text="50:00">
                <font>
                   <Font name="Courier New Bold" size="50.0" />
                </font>
