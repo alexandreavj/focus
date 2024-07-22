@@ -1,19 +1,24 @@
 package com.focus.focus;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.scene.control.Label;
+import javafx.util.Duration;
 
 public class PomodoroTimer {
-    private Timer timer;
+    private final Label timerLabel;
+
+    private Timeline timeline;
 
     private int secondsBeginning;
 
     private int secondsRemaining;
 
 
-    public PomodoroTimer(int secondsBeginning) {
-        this.timer = new Timer();
+    public PomodoroTimer(int secondsBeginning, Label timerLabel) {
         this.secondsBeginning = this.secondsRemaining = secondsBeginning;
+        this.timerLabel = timerLabel;
     }
 
 
@@ -33,26 +38,37 @@ public class PomodoroTimer {
         return secondsRemaining;
     }
 
-    public void start() {
-        this.timer = new Timer();
 
-        this.timer.scheduleAtFixedRate(new TimerTask() {
-            public void run() {
-                secondsRemaining -= 1;
-                if (secondsRemaining == 0) {
-                    secondsRemaining = secondsBeginning;
-                    timer.cancel();
-                }
+    public void start() {
+        this.timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            this.secondsRemaining -= 1;
+            this.updateTimerLabel();
+
+            if (this.secondsRemaining <= 0) {
+                this.secondsRemaining = this.secondsBeginning;
+                this.updateTimerLabel();
+                this.timeline.stop();
             }
-        }, 0, 1000);
+        }));
+
+        this.timeline.setCycleCount(Animation.INDEFINITE);
+        this.timeline.play();
     }
 
     public void pause() {
-        timer.cancel();
+        if (this.timeline != null)
+            this.timeline.stop();
     }
 
     public void reset() {
-        this.timer.cancel();
+        if (this.timeline != null)
+            this.timeline.stop();
+
         this.secondsRemaining = this.secondsBeginning;
+        this.updateTimerLabel();
+    }
+
+    private void updateTimerLabel() {
+        this.timerLabel.setText(String.format("%02d:%02d", this.secondsRemaining / 60, this.secondsRemaining % 60));
     }
 }

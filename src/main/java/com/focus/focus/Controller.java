@@ -10,8 +10,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-    private final PomodoroTimer pomodoroTimer = new PomodoroTimer(50 * 60);
-
     @FXML
     private Label timerLabel;
 
@@ -48,33 +46,38 @@ public class Controller implements Initializable {
     @FXML
     private Button pauseTimer;
 
+    private PomodoroTimer pomodoroTimer;
+
 
     public void startTimerHandler() {
-        startTimer.setDisable(true);
-        startTimer.setVisible(false);
-        pauseTimer.setDisable(false);
-        pauseTimer.setVisible(true);
-        pomodoroTimer.start();
+        this.startTimer.setDisable(true);
+        this.startTimer.setVisible(false);
+        this.pauseTimer.setDisable(false);
+        this.pauseTimer.setVisible(true);
+
+        this.pomodoroTimer.start();
     }
 
     public void pauseTimerHandler() {
-        startTimer.setDisable(false);
-        startTimer.setVisible(true);
-        pauseTimer.setDisable(true);
-        pauseTimer.setVisible(false);
-        pomodoroTimer.pause();
+        this.startTimer.setDisable(false);
+        this.startTimer.setVisible(true);
+        this.pauseTimer.setDisable(true);
+        this.pauseTimer.setVisible(false);
+
+        this.pomodoroTimer.pause();
     }
 
     public void resetTimerHandler() {
-        startTimer.setDisable(false);
-        startTimer.setVisible(true);
-        pauseTimer.setDisable(true);
-        pauseTimer.setVisible(false);
-        pomodoroTimer.reset();
+        this.startTimer.setDisable(false);
+        this.startTimer.setVisible(true);
+        this.pauseTimer.setDisable(true);
+        this.pauseTimer.setVisible(false);
+
+        this.pomodoroTimer.reset();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.resetTimerHandler();
+        this.pomodoroTimer = new PomodoroTimer(30, timerLabel);
     }
 }
