@@ -2,6 +2,7 @@ package com.focus.focus;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Properties;
 
 /**
@@ -127,6 +128,21 @@ public class Configuration {
             this.breakDuration = Integer.parseInt(configuration.getProperty("breakDuration", "20")) * 60;
         } catch (Exception e) {
             throw new RuntimeException("Failed to load configuration file.");
+        }
+    }
+
+    /**
+     * Save the configuration file.
+     * @throws RuntimeException if the configuration file could not be saved.
+     */
+    public void saveConfigurationFile() {
+        Properties configuration = new Properties();
+        try {
+            configuration.setProperty("focusDuration", Integer.toString(this.focusDuration / 60));
+            configuration.setProperty("breakDuration", Integer.toString(this.breakDuration / 60));
+            configuration.store(new FileOutputStream(this.configurationFilePath), null);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to save configuration file.");
         }
     }
 }
