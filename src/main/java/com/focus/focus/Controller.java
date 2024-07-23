@@ -67,19 +67,14 @@ public class Controller implements Initializable {
     }
 
     /**
+     * Configuration instance - handles configuration file.
+     */
+    private final Configuration configuration = new Configuration();
+
+    /**
      * Pomodoro timer instance - handles timer operations.
      */
     private PomodoroTimer pomodoroTimer;
-
-    /**
-     * Duration in seconds for the focus timer.
-     */
-    private int focusDuration = 50 * 60;
-
-    /**
-     * Duration in seconds for the break timer.
-     */
-    private int breakDuration = 20 * 60;
 
 
     /**
@@ -134,7 +129,7 @@ public class Controller implements Initializable {
         this.focusPomodoro.setStyle(ButtonStyle.SELECTED.style);
         this.breakPomodoro.setStyle(ButtonStyle.UNSELECTED.style);
 
-        this.pomodoroTimer.setSecondsBeginning(this.focusDuration);
+        this.pomodoroTimer.setSecondsBeginning(this.configuration.getFocusDuration());
         this.resetTimerHandler();
     }
 
@@ -145,7 +140,7 @@ public class Controller implements Initializable {
         this.breakPomodoro.setStyle(ButtonStyle.SELECTED.style);
         this.focusPomodoro.setStyle(ButtonStyle.UNSELECTED.style);
 
-        this.pomodoroTimer.setSecondsBeginning(this.breakDuration);
+        this.pomodoroTimer.setSecondsBeginning(this.configuration.getBreakDuration());
         this.resetTimerHandler();
     }
 
@@ -156,7 +151,7 @@ public class Controller implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.pomodoroTimer = new PomodoroTimer(this.focusDuration, this);
+        this.pomodoroTimer = new PomodoroTimer(this.configuration.getFocusDuration(), this);
         this.focusTimerHandler();
     }
 }
