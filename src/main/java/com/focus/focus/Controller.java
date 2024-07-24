@@ -1,5 +1,6 @@
 package com.focus.focus;
 
+import javafx.animation.Animation;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -89,6 +90,14 @@ public class Controller implements Initializable {
     private Label breakDurationLabel;
 
     /**
+     * App state enumeration - used to set the state of the timer between focus or break.
+     */
+    public enum State {
+        FOCUS,
+        BREAK
+    }
+
+    /**
      * Button style enumeration - used to style the buttons.
      */
     private enum ButtonStyle {
@@ -120,6 +129,11 @@ public class Controller implements Initializable {
      */
     private PomodoroTimer pomodoroTimer;
 
+    /**
+     * State of the timer (focus or break).
+     */
+    private State state = State.FOCUS;
+
 
     /**
      * Get timer label object - useful for PomodoroTimer class.
@@ -129,6 +143,21 @@ public class Controller implements Initializable {
         return timerLabel;
     }
 
+    /**
+     * Get app's timer state.
+     * @return App's timer state (focus or break).
+     */
+    public State getState() {
+        return this.state;
+    }
+
+    /**
+     * Get Configuration instance - handles configuration file and stores timer focus and break duration.
+     * @return App configuration instance.
+     */
+    public Configuration getConfiguration() {
+        return this.configuration;
+    }
 
     /**
      * Starts pomodoro timer and updates the GUI buttons accordingly.
@@ -170,10 +199,12 @@ public class Controller implements Initializable {
      * Switches pomodoro timer to focus mode.
      */
     public void focusTimerButtonHandler() {
+        this.state = State.FOCUS;
+
         this.focusPomodoro.setStyle(ButtonStyle.SELECTED.style);
         this.breakPomodoro.setStyle(ButtonStyle.UNSELECTED.style);
 
-        this.pomodoroTimer.setSecondsBeginning(this.configuration.getFocusDuration());
+        this.pomodoroTimer.setSecondsRemaining(this.configuration.getFocusDuration());
         this.resetTimerButtonHandler();
     }
 
@@ -181,10 +212,12 @@ public class Controller implements Initializable {
      * Switches pomodoro timer to break mode.
      */
     public void breakTimerButtonHandler() {
+        this.state = State.BREAK;
+
         this.breakPomodoro.setStyle(ButtonStyle.SELECTED.style);
         this.focusPomodoro.setStyle(ButtonStyle.UNSELECTED.style);
 
-        this.pomodoroTimer.setSecondsBeginning(this.configuration.getBreakDuration());
+        this.pomodoroTimer.setSecondsRemaining(this.configuration.getBreakDuration());
         this.resetTimerButtonHandler();
     }
 
@@ -205,8 +238,13 @@ public class Controller implements Initializable {
         this.saveSettingsTimer.setVisible(false);
         this.openSettingsTimer.setVisible(true);
 
-        this.configuration.setFocusDuration(this.focusDurationSlider.valueProperty().intValue());
-        this.configuration.setBreakDuration(this.breakDurationSlider.valueProperty().intValue());
+        this.configuration.setFocusDuration(this.focusDurationSlider.valueProperty().intValue() * 60);
+        this.configuration.setBreakDuration(this.breakDurationSlider.valueProperty().intValue() * 60);
+
+        if (this.pomodoroTimer.getTimeline() != null && this.pomodoroTimer.getTimeline().getStatus() == Animation.Status.STOPPED) {
+            this.pomodoroTimer.reset();
+        }
+
         this.configuration.saveConfigurationFile();
     }
 
@@ -226,5 +264,8 @@ public class Controller implements Initializable {
         this.breakDurationSlider.valueProperty().addListener((_, _, newValue) -> {
             this.breakDurationLabel.setText(String.valueOf(newValue.intValue()));
         });
+
+        this.focusDurationSlider.setValue(this.configuration.getFocusDuration() / 60);
+        this.breakDurationSlider.setValue(this.configuration.getBreakDuration() / 60);
     }
 }

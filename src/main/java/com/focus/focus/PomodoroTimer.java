@@ -22,11 +22,6 @@ public class PomodoroTimer {
     private Timeline timeline;
 
     /**
-     * Duration in seconds for the timer.
-     */
-    private int secondsBeginning;
-
-    /**
      * Remaining seconds for the timer.
      */
     private int secondsRemaining;
@@ -38,37 +33,27 @@ public class PomodoroTimer {
      * @param controller Controller instance.
      */
     public PomodoroTimer(int secondsBeginning, Controller controller) {
-        this.secondsBeginning = this.secondsRemaining = secondsBeginning;
+        this.secondsRemaining = secondsBeginning;
         this.controller = controller;
     }
 
-
     /**
-     * Get the duration in seconds for the timer.
-     * @return Duration in seconds for the timer.
+     * Set the remaining seconds for the timer.
+     * @param secondsRemaining Seconds remaining in timer.
      */
-    public int getSecondsBeginning() {
-        return secondsBeginning;
+    public void setSecondsRemaining(int secondsRemaining) {
+        if (secondsRemaining <= 0)
+            throw new IllegalArgumentException("Seconds remaining for timer mut be grater than zero!");
+
+        this.secondsRemaining = secondsRemaining;
     }
 
     /**
-     * Set the duration in seconds for the timer.
-     * @param secondsBeginning Duration in seconds for the timer.
-     */
-    public void setSecondsBeginning(int secondsBeginning) {
-        if (secondsBeginning <= 0) {
-            throw new IllegalArgumentException("The duration for the timer must be greater than 0.");
-        } else {
-            this.secondsBeginning = secondsBeginning;
-        }
-    }
-
-    /**
-     * Get the remaining seconds for the timer.
+     * Get the Timeline instance.
      * @return Remaining seconds for the timer.
      */
-    public int getSecondsRemaining() {
-        return secondsRemaining;
+    public Timeline getTimeline() {
+        return this.timeline;
     }
 
 
@@ -104,7 +89,12 @@ public class PomodoroTimer {
         if (this.timeline != null)
             this.timeline.stop();
 
-        this.secondsRemaining = this.secondsBeginning;
+        if (this.controller.getState() == Controller.State.FOCUS) {
+            this.secondsRemaining = this.controller.getConfiguration().getFocusDuration();
+        } else {
+            this.secondsRemaining = this.controller.getConfiguration().getBreakDuration();
+        }
+
         this.updateTimerLabel();
     }
 
