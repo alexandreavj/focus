@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.layout.Pane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -43,6 +45,48 @@ public class Controller implements Initializable {
      */
     @FXML
     private Button breakPomodoro;
+
+    /**
+     * GUI button to open pomodoro settings pane.
+     */
+    @FXML
+    private Button openSettingsTimer;
+
+    /**
+     * GUI button to save pomodoro settings.
+     */
+    @FXML
+    private Button saveSettingsTimer;
+
+    /**
+     * GUI pane for pomodoro settings.
+     */
+    @FXML
+    private Pane settingsTimerPane;
+
+    /**
+     * GUI slider for focus duration.
+     */
+    @FXML
+    private Slider focusDurationSlider;
+
+    /**
+     * GUI slider for break duration.
+     */
+    @FXML
+    private Slider breakDurationSlider;
+
+    /**
+     * GUI label for focus duration.
+     */
+    @FXML
+    private Label focusDurationLabel;
+
+    /**
+     * GUI label for break duration.
+     */
+    @FXML
+    private Label breakDurationLabel;
 
     /**
      * Button style enumeration - used to style the buttons.
@@ -89,7 +133,7 @@ public class Controller implements Initializable {
     /**
      * Starts pomodoro timer and updates the GUI buttons accordingly.
      */
-    public void startTimerHandler() {
+    public void startTimerButtonHandler() {
         this.startTimer.setDisable(true);
         this.startTimer.setVisible(false);
         this.pauseTimer.setDisable(false);
@@ -101,7 +145,7 @@ public class Controller implements Initializable {
     /**
      * Pauses pomodoro timer and updates the GUI buttons accordingly.
      */
-    public void pauseTimerHandler() {
+    public void pauseTimerButtonHandler() {
         this.startTimer.setDisable(false);
         this.startTimer.setVisible(true);
         this.pauseTimer.setDisable(true);
@@ -113,7 +157,7 @@ public class Controller implements Initializable {
     /**
      * Resets pomodoro timer and updates the GUI buttons accordingly.
      */
-    public void resetTimerHandler() {
+    public void resetTimerButtonHandler() {
         this.startTimer.setDisable(false);
         this.startTimer.setVisible(true);
         this.pauseTimer.setDisable(true);
@@ -125,23 +169,45 @@ public class Controller implements Initializable {
     /**
      * Switches pomodoro timer to focus mode.
      */
-    public void focusTimerHandler() {
+    public void focusTimerButtonHandler() {
         this.focusPomodoro.setStyle(ButtonStyle.SELECTED.style);
         this.breakPomodoro.setStyle(ButtonStyle.UNSELECTED.style);
 
         this.pomodoroTimer.setSecondsBeginning(this.configuration.getFocusDuration());
-        this.resetTimerHandler();
+        this.resetTimerButtonHandler();
     }
 
     /**
      * Switches pomodoro timer to break mode.
      */
-    public void breakTimerHandler() {
+    public void breakTimerButtonHandler() {
         this.breakPomodoro.setStyle(ButtonStyle.SELECTED.style);
         this.focusPomodoro.setStyle(ButtonStyle.UNSELECTED.style);
 
         this.pomodoroTimer.setSecondsBeginning(this.configuration.getBreakDuration());
-        this.resetTimerHandler();
+        this.resetTimerButtonHandler();
+    }
+
+    /**
+     * Opens the pomodoro settings pane.
+     */
+    public void pomodoroSettingsButtonHandler() {
+        this.settingsTimerPane.setVisible(true);
+        this.saveSettingsTimer.setVisible(true);
+        this.openSettingsTimer.setVisible(false);
+    }
+
+    /**
+     * Saves the pomodoro settings.
+     */
+    public void savePomodoroSettingsButtonHandler() {
+        this.settingsTimerPane.setVisible(false);
+        this.saveSettingsTimer.setVisible(false);
+        this.openSettingsTimer.setVisible(true);
+
+        this.configuration.setFocusDuration(this.focusDurationSlider.valueProperty().intValue());
+        this.configuration.setBreakDuration(this.breakDurationSlider.valueProperty().intValue());
+        this.configuration.saveConfigurationFile();
     }
 
     /**
@@ -152,6 +218,13 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.pomodoroTimer = new PomodoroTimer(this.configuration.getFocusDuration(), this);
-        this.focusTimerHandler();
+        this.focusTimerButtonHandler();
+
+        this.focusDurationSlider.valueProperty().addListener((_, _, newValue) -> {
+            this.focusDurationLabel.setText(String.valueOf(newValue.intValue()));
+        });
+        this.breakDurationSlider.valueProperty().addListener((_, _, newValue) -> {
+            this.breakDurationLabel.setText(String.valueOf(newValue.intValue()));
+        });
     }
 }

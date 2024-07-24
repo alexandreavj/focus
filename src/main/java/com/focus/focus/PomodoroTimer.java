@@ -81,7 +81,7 @@ public class PomodoroTimer {
             this.updateTimerLabel();
 
             if (this.secondsRemaining <= 0) {
-                this.controller.resetTimerHandler();
+                this.controller.resetTimerButtonHandler();
             }
         }));
 
