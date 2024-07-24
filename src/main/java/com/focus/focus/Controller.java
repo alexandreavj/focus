@@ -241,7 +241,7 @@ public class Controller implements Initializable {
         this.configuration.setFocusDuration(this.focusDurationSlider.valueProperty().intValue() * 60);
         this.configuration.setBreakDuration(this.breakDurationSlider.valueProperty().intValue() * 60);
 
-        if (this.pomodoroTimer.getTimeline() != null && this.pomodoroTimer.getTimeline().getStatus() == Animation.Status.STOPPED) {
+        if (this.pomodoroTimer.getTimeline() == null && this.pomodoroTimer.getTimeline().getStatus() == Animation.Status.STOPPED) {
             this.pomodoroTimer.reset();
         }
 
