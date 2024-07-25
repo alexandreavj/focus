@@ -10,9 +10,9 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="parent" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.focus.focus.Controller">
+<AnchorPane fx:id="parent" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.focus.focus.Controller">
    <children>
-      <MediaView fx:id="backgroundMediaView" fitHeight="600.0" fitWidth="800.0" layoutX="300.0" layoutY="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <MediaView fx:id="backgroundMediaView" fitHeight="500.0" fitWidth="800.0" layoutX="300.0" layoutY="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Pane prefHeight="125.0" prefWidth="235.0" style="-fx-border-color: BLACK; -fx-border-width: 1.5; -fx-border-radius: 7; -fx-background-color: rgb(244, 244, 244); -fx-background-radius: 7;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
          <children>
             <Pane prefHeight="30.0" prefWidth="235.0" style="-fx-border-color: BLACK; -fx-border-radius: 7;">
