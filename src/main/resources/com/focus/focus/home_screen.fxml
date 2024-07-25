@@ -105,5 +105,30 @@
             </Label>
          </children>
       </Pane>
+      <Button fx:id="loadBackgroundButton" layoutX="266.0" layoutY="460.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#loadBackgroundButtonHandler" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: rgba(244, 244, 244, 0.5); -fx-background-radius: 3; -fx-border-color: BLACK; -fx-border-radius: 3;" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="265.0">
+         <graphic>
+            <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@upload.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="volumeButton" layoutX="305.0" layoutY="463.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#volumeButtonHandler" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: rgba(244, 244, 244, 0.5); -fx-background-radius: 3; -fx-border-color: BLACK; -fx-border-radius: 3;" visible="false" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="295.0">
+         <graphic>
+            <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@mute.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="muteButton" layoutX="275.0" layoutY="463.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#muteButtonHandler" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: rgba(244, 244, 244, 0.5); -fx-background-radius: 3; -fx-border-color: BLACK; -fx-border-radius: 3;" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="295.0">
+         <graphic>
+            <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@volume.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
    </children>
 </AnchorPane>

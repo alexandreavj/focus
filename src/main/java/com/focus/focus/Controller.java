@@ -11,7 +11,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -105,6 +107,24 @@ public class Controller implements Initializable {
      */
     @FXML
     private AnchorPane parent;
+
+    /**
+     * GUI button to load background.
+     */
+    @FXML
+    private Button loadBackgroundButton;
+
+    /**
+     * GUI button to mute background.
+     */
+    @FXML
+    private Button volumeButton;
+
+    /**
+     * GUI button to mute background.
+     */
+    @FXML
+    private Button muteButton;
 
     /**
      * App state enumeration - used to set the state of the timer between focus or break.
@@ -263,6 +283,43 @@ public class Controller implements Initializable {
         }
 
         this.configuration.saveConfigurationFile();
+    }
+
+    /**
+     * Loads the background video.
+     */
+    public void loadBackgroundButtonHandler() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("choose a background");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("videos", "*.mp4"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("images", "*.jpeg", "*.jpg"));
+
+        File selectedFile = fileChooser.showOpenDialog(this.parent.getScene().getWindow());
+        if (selectedFile != null && selectedFile.exists()) {
+            Media media = new Media(selectedFile.toURI().toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            this.backgroundMediaView.setMediaPlayer(mediaPlayer);
+            mediaPlayer.play();
+        }
+    }
+
+    /**
+     * Unmutes the background video.
+     */
+    public void volumeButtonHandler() {
+        this.backgroundMediaView.getMediaPlayer().setMute(false);
+        this.volumeButton.setVisible(false);
+        this.muteButton.setVisible(true);
+    }
+
+    /**
+     * Mutes the background video.
+     */
+    public void muteButtonHandler() {
+        this.backgroundMediaView.getMediaPlayer().setMute(true);
+        this.muteButton.setVisible(false);
+        this.volumeButton.setVisible(true);
     }
 
     /**
