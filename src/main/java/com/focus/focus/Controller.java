@@ -6,9 +6,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -88,6 +93,18 @@ public class Controller implements Initializable {
      */
     @FXML
     private Label breakDurationLabel;
+
+    /**
+     * GUI media view for background video.
+     */
+    @FXML
+    private MediaView backgroundMediaView;
+
+    /**
+     * GUI parent anchor pane.
+     */
+    @FXML
+    private AnchorPane parent;
 
     /**
      * App state enumeration - used to set the state of the timer between focus or break.
@@ -241,7 +258,7 @@ public class Controller implements Initializable {
         this.configuration.setFocusDuration(this.focusDurationSlider.valueProperty().intValue() * 60);
         this.configuration.setBreakDuration(this.breakDurationSlider.valueProperty().intValue() * 60);
 
-        if (this.pomodoroTimer.getTimeline() == null && this.pomodoroTimer.getTimeline().getStatus() == Animation.Status.STOPPED) {
+        if (this.pomodoroTimer.getTimeline() == null || this.pomodoroTimer.getTimeline().getStatus() == Animation.Status.STOPPED) {
             this.pomodoroTimer.reset();
         }
 
@@ -255,9 +272,16 @@ public class Controller implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // automatically resize the background video to fit window
+        this.backgroundMediaView.setPreserveRatio(false);
+        this.backgroundMediaView.fitWidthProperty().bind(this.parent.widthProperty());
+        this.backgroundMediaView.fitHeightProperty().bind(this.parent.heightProperty());
+
+        // initialize pomodoro timer
         this.pomodoroTimer = new PomodoroTimer(this.configuration.getFocusDuration(), this);
         this.focusTimerButtonHandler();
 
+        // initialize sliders and their labels
         this.focusDurationSlider.valueProperty().addListener((_, _, newValue) -> {
             this.focusDurationLabel.setText(String.valueOf(newValue.intValue()));
         });
@@ -267,5 +291,12 @@ public class Controller implements Initializable {
 
         this.focusDurationSlider.setValue(this.configuration.getFocusDuration() / 60);
         this.breakDurationSlider.setValue(this.configuration.getBreakDuration() / 60);
+
+        // initialize background video
+        Media media = new Media(Objects.requireNonNull(getClass().getResource("retro_mac_animation.mp4")).toExternalForm());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        this.backgroundMediaView.setMediaPlayer(mediaPlayer);
+        mediaPlayer.play();
     }
 }
