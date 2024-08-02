@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"com.focus.focus","l":"com.focus.focus"}];updateSearchResults();
