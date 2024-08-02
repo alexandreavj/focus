@@ -1,7 +1,7 @@
 # focus
 
 ## how to install?
-The following tutorial applies for Windows, Linux and macOS users. For simplicity, this tutorial will take advantage of IntelliJ IDEA's integrations with both Maven and JavaFX.
+The following tutorial applies for Windows, Linux and macOS users. For simplicity, this tutorial will take advantage of IntelliJ IDEA's integrations and automatization of some installations.
 
 ### prerequisites
 - IntelliJ IDEA already installed in the system
