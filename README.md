@@ -17,7 +17,7 @@ The following tutorial applies for Windows, Linux and macOS users. For simplicit
 5. A new folder named 'target' will be created in the project directory. In that directory, a JAR file with name ending in `-shaded.jar` will be created. This is the executable JAR file of the *focus* desktop app.
 
 ### troubleshooting
-If there is an error in the build process related to JavaFX Media not being found, try the following:
+If there is an error in the build process related to JavaFX Media (or other dependency) not being found, try the following:
 - Add the dependencies manually to the project:
   1. In IntelliJ IDEA, go to `File` -> `Project Structure` -> `Libraries`
   2. Click on the `+` sign and select `Java`
