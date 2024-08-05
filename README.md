@@ -15,11 +15,11 @@ It was developed as a personal project in order to create my own study tool, cus
 
 ## how to install?
 The following tutorial applies for Windows, Linux and macOS users. For simplicity, this tutorial will take advantage of IntelliJ IDEA's integrations and automatization of some installations.
-In alternative, you can try one of the pre-built JAR files in the `Releases` section of this repository.
+In alternative, you can try one of the pre-built JAR files in the `Releases` section of this repository (you will still need JDK 22 or later on your system).
 
 ### prerequisites
 - IntelliJ IDEA already installed in the system
-- Most recent version of JDK installed
+- Most recent version of JDK installed (JDK 22 or later)
   1. Create a new project in IntelliJ IDEA
   2. In 'JDK' drop-down menu, download the most recent version of JDK
 
@@ -40,6 +40,8 @@ To have *focus* on your Mac's Launchpad, follow these steps:
 
 ### troubleshooting
 If there is an error in the build process related to JavaFX Media (or other dependency) not being found, try the following:
+- `Reload All Maven Projects` on Maven tab in IntelliJ IDEA
+- Try to `Download Sources and\or Documentation` in the Maven tab
 - Add the dependencies manually to the project:
   1. In IntelliJ IDEA, go to `File` -> `Project Structure` -> `Libraries`
   2. Click on the `+` sign and select `Java`
