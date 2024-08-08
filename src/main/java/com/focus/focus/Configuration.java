@@ -89,6 +89,13 @@ public class Configuration {
         this.breakDuration = breakDuration;
     }
 
+    /**
+     * Get the configuration file path.
+     * @return Configuration file path.
+     */
+    public String getConfigurationFilePath() {
+        return configurationFilePath;
+    }
 
     /**
      * Creates the configuration file if it does not exist.

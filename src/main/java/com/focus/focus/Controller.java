@@ -15,8 +15,12 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 /**
  * Controller class - handles GUI events.
@@ -160,6 +164,16 @@ public class Controller implements Initializable {
      * Configuration instance - handles configuration file.
      */
     private final Configuration configuration = new Configuration();
+
+    /**
+     * Logger instance - used to log messages.
+     */
+    private final Logger logger = Logger.getLogger("focus");
+
+    /**
+     * Output file for the logger.
+     */
+    private final String log_file = String.valueOf(Paths.get(new File(this.configuration.getConfigurationFilePath()).getParent(), "focus.log"));
 
     /**
      * Pomodoro timer instance - handles timer operations.
@@ -329,6 +343,16 @@ public class Controller implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // set logger output file
+        try {
+            this.logger.info("Setting logger output file: " + this.log_file);
+            FileHandler fileHandler = new FileHandler(this.log_file, true);
+            fileHandler.setFormatter(new SimpleFormatter());
+            this.logger.addHandler(fileHandler);
+        } catch (Exception e) {
+            this.logger.warning("Failed to set logger output file.");
+        }
+
         // automatically resize the background video to fit window
         this.backgroundMediaView.setPreserveRatio(false);
         this.backgroundMediaView.fitWidthProperty().bind(this.parent.widthProperty());
@@ -350,10 +374,14 @@ public class Controller implements Initializable {
         this.breakDurationSlider.setValue(this.configuration.getBreakDuration() / 60);
 
         // initialize background video
-        Media media = new Media(Objects.requireNonNull(getClass().getResource("retro_mac_animation.mp4")).toExternalForm());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        this.backgroundMediaView.setMediaPlayer(mediaPlayer);
-        mediaPlayer.play();
+        URL defaultBG = getClass().getResource("retro_mac_animation.mp4");
+        this.logger.info("Default BG - initialize controller: " + defaultBG);
+        if (defaultBG != null) {
+            Media media = new Media(defaultBG.toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            this.backgroundMediaView.setMediaPlayer(mediaPlayer);
+            mediaPlayer.play();
+        }
     }
 }
