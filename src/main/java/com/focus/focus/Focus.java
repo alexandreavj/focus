@@ -3,9 +3,12 @@ package com.focus.focus;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Focus desktop app.
@@ -24,6 +27,15 @@ public class Focus extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 800, 500);
         stage.setTitle("focus: home");
         stage.setScene(scene);
+
+        // set taskbar and window icons
+        try {
+            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
+            Taskbar.getTaskbar().setIconImage(Toolkit.getDefaultToolkit().getImage(Objects.requireNonNull(getClass().getResource("logo.png"))));
+        } catch (Exception e) {
+            System.out.println("Could not set taskbar and window icons: " + e);
+        }
+
         stage.show();
     }
 
