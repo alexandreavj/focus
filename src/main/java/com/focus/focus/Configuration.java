@@ -12,9 +12,14 @@ import java.util.Properties;
  */
 public class Configuration {
     /**
+     * Configuration file name.
+     */
+    private static final String CONFIG_FILE_NAME = "config.properties";
+
+    /**
      * Configuration file path.
      */
-    private final String configurationFilePath;
+    private final String appDataDirectory;
 
     /**
      * Focus duration in seconds.
@@ -38,16 +43,16 @@ public class Configuration {
         String operatingSystem = System.getProperty("os.name").toUpperCase();
         // windows
         if (operatingSystem.contains("WIN")) {
-            configurationFilePath = System.getenv("APPDATA") + "\\focus\\config.properties";
+            appDataDirectory = System.getenv("APPDATA") + "\\focus\\";
         // macOS
         } else if (operatingSystem.contains("MAC") || operatingSystem.contains("DARWIN")) {
-            configurationFilePath = System.getProperty("user.home") + "/Library/Application Support/focus/config.properties";
+            appDataDirectory = System.getProperty("user.home") + "/Library/Application Support/focus/";
         // unix/linux
         } else if (operatingSystem.contains("NIX") || operatingSystem.contains("NUX") || operatingSystem.contains("AIX")) {
-            configurationFilePath = System.getProperty("user.dir") + "/.config/focus/config.properties";
+            appDataDirectory = System.getProperty("user.dir") + "/.config/focus/";
         // other
         } else {
-            configurationFilePath = System.getProperty("user.home") + "/.focus/config.properties";
+            appDataDirectory = System.getProperty("user.home") + "/.focus/";
         }
 
         // creates the configuration file if it does not exist
@@ -93,8 +98,8 @@ public class Configuration {
      * Get the configuration file path.
      * @return Configuration file path.
      */
-    public String getConfigurationFilePath() {
-        return configurationFilePath;
+    public String getAppDataDirectory() {
+        return appDataDirectory;
     }
 
     /**
@@ -103,7 +108,7 @@ public class Configuration {
      * @throws RuntimeException if the configuration file could not be created.
      */
     private void createConfigurationFile() throws RuntimeException {
-        File configurationFile = new File(configurationFilePath);
+        File configurationFile = new File(this.appDataDirectory + CONFIG_FILE_NAME);
         File parentDirectory = configurationFile.getParentFile();
 
         if (!parentDirectory.exists()) {
@@ -128,7 +133,7 @@ public class Configuration {
     private void loadConfigurationFile() throws RuntimeException {
         Properties configuration = new Properties();
         try {
-            configuration.load(new FileInputStream(this.configurationFilePath));
+            configuration.load(new FileInputStream(this.appDataDirectory + CONFIG_FILE_NAME));
 
             // set default values in configuration if they do not exist or load them otherwise
             this.focusDuration = Integer.parseInt(configuration.getProperty("focusDuration", "50")) * 60;
@@ -147,7 +152,7 @@ public class Configuration {
         try {
             configuration.setProperty("focusDuration", Integer.toString(this.focusDuration / 60));
             configuration.setProperty("breakDuration", Integer.toString(this.breakDuration / 60));
-            configuration.store(new FileOutputStream(this.configurationFilePath), null);
+            configuration.store(new FileOutputStream(this.appDataDirectory + CONFIG_FILE_NAME), null);
         } catch (Exception e) {
             throw new RuntimeException("Failed to save configuration file.");
         }

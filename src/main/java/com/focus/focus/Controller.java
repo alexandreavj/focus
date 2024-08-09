@@ -14,9 +14,12 @@ import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
@@ -28,6 +31,51 @@ import java.util.logging.SimpleFormatter;
  * @version 1.0
  */
 public class Controller implements Initializable {
+    /**
+     * App state enumeration - used to set the state of the timer between focus or break.
+     */
+    public enum State {
+        FOCUS,
+        BREAK
+    }
+
+    /**
+     * Button style enumeration - used to style the buttons.
+     */
+    private enum ButtonStyle {
+        SELECTED("-fx-background-color: rgba(0, 0, 0, 0.1);"
+                + "-fx-border-color: BLACK;"
+                + "-fx-border-width: 1px;"
+                + "-fx-border-radius: 3px;"
+        ),
+        UNSELECTED("-fx-background-color: rgba(0, 0, 0, 0.0);"
+                + "-fx-border-color: BLACK;"
+                + "-fx-border-width: 1px;"
+                + "-fx-border-radius: 3px;"
+        );
+
+        private final String style;
+
+        ButtonStyle(String style) {
+            this.style = style;
+        }
+    }
+
+    /**
+     * Configuration instance - handles configuration file.
+     */
+    private final Configuration configuration = new Configuration();
+
+    /**
+     * Logger instance - used to log messages.
+     */
+    private final Logger logger = Logger.getLogger("focus");
+
+    /**
+     * Output file for the logger.
+     */
+    private final String log_file = String.valueOf(Paths.get(configuration.getAppDataDirectory() + "focus.log"));
+
     /**
      * GUI pomodoro timer label.
      */
@@ -129,51 +177,6 @@ public class Controller implements Initializable {
      */
     @FXML
     private Button muteButton;
-
-    /**
-     * App state enumeration - used to set the state of the timer between focus or break.
-     */
-    public enum State {
-        FOCUS,
-        BREAK
-    }
-
-    /**
-     * Button style enumeration - used to style the buttons.
-     */
-    private enum ButtonStyle {
-        SELECTED("-fx-background-color: rgba(0, 0, 0, 0.1);"
-                + "-fx-border-color: BLACK;"
-                + "-fx-border-width: 1px;"
-                + "-fx-border-radius: 3px;"
-        ),
-        UNSELECTED("-fx-background-color: rgba(0, 0, 0, 0.0);"
-                 + "-fx-border-color: BLACK;"
-                 + "-fx-border-width: 1px;"
-                 + "-fx-border-radius: 3px;"
-        );
-
-        private final String style;
-
-        ButtonStyle(String style) {
-            this.style = style;
-        }
-    }
-
-    /**
-     * Configuration instance - handles configuration file.
-     */
-    private final Configuration configuration = new Configuration();
-
-    /**
-     * Logger instance - used to log messages.
-     */
-    private final Logger logger = Logger.getLogger("focus");
-
-    /**
-     * Output file for the logger.
-     */
-    private final String log_file = String.valueOf(Paths.get(new File(this.configuration.getConfigurationFilePath()).getParent(), "focus.log"));
 
     /**
      * Pomodoro timer instance - handles timer operations.
@@ -374,14 +377,28 @@ public class Controller implements Initializable {
         this.breakDurationSlider.setValue(this.configuration.getBreakDuration() / 60);
 
         // initialize background video
-        URL defaultBG = getClass().getResource("retro_mac_animation.mp4");
-        this.logger.info("Default BG - initialize controller: " + defaultBG);
-        if (defaultBG != null) {
-            Media media = new Media(defaultBG.toString());
-            MediaPlayer mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-            this.backgroundMediaView.setMediaPlayer(mediaPlayer);
-            mediaPlayer.play();
+        URL defaultBGJAR = getClass().getResource("retro_mac_animation.mp4");
+        this.logger.info("Default BG - initialize controller: " + defaultBGJAR);
+        if (defaultBGJAR != null) {
+            // copy resource to application data directory, if not already there
+            Path defaultBGAppData = Paths.get(this.configuration.getAppDataDirectory(), "retro_mac_animation.mp4");
+            this.logger.info("Destination for default BG: " + defaultBGAppData);
+            if (!Files.exists(defaultBGAppData)) {
+                try {
+                    Files.copy(Path.of(defaultBGJAR.toURI()), defaultBGAppData);
+                    this.logger.info("Default BG successfully copied to " + defaultBGJAR);
+                } catch (IOException | URISyntaxException e) {
+                    this.logger.warning("Could not copy default background from JAR file to application data directory: " + e);
+                }
+            }
+
+            if (Files.exists(defaultBGAppData)) {
+                Media media = new Media(defaultBGAppData.toUri().toString());
+                MediaPlayer mediaPlayer = new MediaPlayer(media);
+                mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+                this.backgroundMediaView.setMediaPlayer(mediaPlayer);
+                mediaPlayer.play();
+            }
         }
     }
 }
