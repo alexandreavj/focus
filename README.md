@@ -37,6 +37,12 @@ To have *focus* on your Mac's Launchpad, follow these steps:
 3. Add `Get Specified Finder Items` action, and select the JAR file
 4. Add `Open Finder Items` action after the previous one
 5. Save the workflow (with the name *focus* ;)) and move it to the `Applications` folder
+6. You can change the icon of the application following these steps:
+   1. Right-click on the application and select `Get Info`
+   2. Open the [_focus_ icon](https://github.com/alexandreavj/focus/blob/main/src/main/resources/com/focus/focus/logo.png)
+   3. Select the icon (press `Cmd` + `A`) and copy it (press `Cmd` + `C`)
+   4. Go back to the `Get Info` window and click on the icon in the top-left corner
+   5. Paste the icon (press `Cmd` + `V`)
 
 ### troubleshooting
 If there is an error in the build process related to JavaFX Media (or other dependency) not being found, try the following:
