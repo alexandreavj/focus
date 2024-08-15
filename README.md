@@ -14,45 +14,57 @@ It was developed as a personal project in order to create my own study tool, cus
 - **Volume Control**: mute your background music when needed
 
 ## how to install?
-The following tutorial applies for Windows, Linux and macOS users. For simplicity, this tutorial will take advantage of IntelliJ IDEA's integrations and automatization of some installations.
-In alternative, you can try one of the pre-built JAR files in the `Releases` section of this repository (you will still need JDK 22 or later on your system).
+In this tutorial, you will be guided through the installation process of *focus*. There will be three methods to install the application: using the pre-built JAR file, using the source code and IntelliJ IDEA, and using the source code and command line. This is because there might be compatibility problems with the pre-built JAR file. Nonetheless, the pre-built JAR file is the recommended method for installation, since it is the most straightforward process.
 
-### prerequisites
-- IntelliJ IDEA already installed in the system
-- Most recent version of JDK installed (JDK 22 or later)
-  1. Create a new project in IntelliJ IDEA
-  2. In 'JDK' drop-down menu, download the most recent version of JDK
 
-### steps
-1. Clone the repository to your local machine
-2. Open the project in IntelliJ IDEA
-3. Double-click on 'Control' key to open 'Run anything' dialog
-4. Run the command `mvn clean install` to build the project
-5. A new folder named 'target' will be created in the project directory. In that directory, a JAR file with name ending in `-shaded.jar` will be created. This is the executable JAR file of the *focus* desktop app.
+### using pre-built JAR file
+#### before starting
+1. Make sure you have JDK 22 or higher installed in your system, and if it is recognized by your system (you can check this by running `java -version` in your terminal).
+2. Download the pre-built JAR file from the [releases page](https://github.com/alexandreavj/focus/releases) of this repository.
 
-### additional steps (_macOS users_)
-To have *focus* on your Mac's Launchpad, follow these steps:
-1. Open `Automator`
-2. Create a new `Application`
-3. Add `Get Specified Finder Items` action, and select the JAR file
-4. Add `Open Finder Items` action after the previous one
-5. Save the workflow (with the name *focus* ;)) and move it to the `Applications` folder
-6. You can change the icon of the application following these steps:
-   1. Right-click on the application and select `Get Info`
-   2. Open the [_focus_ icon](https://github.com/alexandreavj/focus/blob/main/src/main/resources/com/focus/focus/logo.png)
-   3. Select the icon (press `Cmd` + `A`) and copy it (press `Cmd` + `C`)
-   4. Go back to the `Get Info` window and click on the icon in the top-left corner
-   5. Paste the icon (press `Cmd` + `V`)
+#### Windows
+1. Open 'Notepad' and paste the following code, replacing `path\to\focus.jar` with the path to the downloaded JAR file:
+```batch
+java -jar path\to\focus.jar
+```
+2. Save the file as `focus.bat`.
+3. To create a shortcut for the application (which you can add to your taskbar or Start Menu), right-click on a directory and select `New` > `Shortcut`. In the location field, paste the path to the `focus.bat` file. Click `Next`, name the shortcut `focus`, and click `Finish`. To change the icon of the shortcut, right-click on it, select `Properties`, click on `Change Icon`, and select the [_focus_ icon]() from the repository (`ico` format).
+4. You can now run the application by double-clicking the shortcut or the `bat` file.
 
-### troubleshooting
-If there is an error in the build process related to JavaFX Media (or other dependency) not being found, try the following:
-- `Reload All Maven Projects` on Maven tab in IntelliJ IDEA
-- Try to `Download Sources and\or Documentation` in the Maven tab
-- Add the dependencies manually to the project:
-  1. In IntelliJ IDEA, go to `File` -> `Project Structure` -> `Libraries`
-  2. Click on the `+` sign and select `Java`
-  3. According to the location of the JavaFX SDK in your system (which you can check in the libraries listed in `Project Structure`), add JavaFX Media JAR file.
-- Try to change the versions of the dependencies in the `pom.xml` file according to IDE's suggestions (or try to remove the version tag)
+#### macOS
+1. Open `Automator` and create a new application.
+2. Search for `Get Specified Finder Items` and drag it to the workflow. Select the downloaded JAR file.
+3. Search for `Open Finder Items` and drag it to the workflow.
+4. Save the application as `focus.app` to `Applications` folder.
+5. Navigate to the `Applications` folder and right-click on the `focus.app` file. Select `Get Info` and click on the icon in the top-left corner. Download and open the [_focus_ icon]() from the repository (`png` format) and use `Command` + `A` followed by `Command` + `C` to copy the icon. Click on the icon in the `Get Info` window and use `Command` + `V` to paste the icon.
+6You now have _focus_ or your Mac's Launchpad.
+
+
+### using source code and IntelliJ IDEA to build JAR file
+#### before starting
+1. Make sure you have JDK 22 or higher installed in your system, and if it is recognized by your system (you can check this by running `java -version` in your terminal).
+2. Download and install IntelliJ IDEA.
+
+#### windows and macOS
+1. Open IntelliJ IDEA and choose `Get from Version Control`. Paste the URL of this repository and clone it.
+2. Open the project and in `Maven` tab, select `Run Anything` and type `mvn clean install` to build the JAR file.
+3. The JAR file will be located in the `target` directory of the project, with the name `focus-1.0-SNAPSHOT-shaded.jar`.
+4. Follow the instructions in the section [using pre-built JAR file](#using-pre-built-jar-file) to create a shortcut for the application.
+
+
+### using source code and command line (Windows only)
+You must follow this process if you are unable to build the JAR file using IntelliJ IDEA due to a problem with Maven.
+
+#### before starting
+1. Make sure you have JDK 22 or higher installed in your system, and if it is recognized by your system (you can check this by running `java -version` in your terminal).
+
+#### windows
+1. Go to [Maven's official website]() and follow the instructions to download and install Maven.
+2. Open the command line and navigate to the directory where the project was cloned.
+3. Run the following command to build the JAR file: `mvn clean install`.
+4. The JAR file will be located in the `target` directory of the project, with the name `focus-1.0-SNAPSHOT-shaded.jar`.
+5. Follow the instructions in the section [using pre-built JAR file](#using-pre-built-jar-file) to create a shortcut for the application.
+
 
 #### _by alex j._
 
