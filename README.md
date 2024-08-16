@@ -28,7 +28,7 @@ In this tutorial, you will be guided through the installation process of *focus*
 java -jar path\to\focus.jar
 ```
 2. Save the file as `focus.bat`.
-3. To create a shortcut for the application (which you can add to your taskbar or Start Menu), right-click on a directory and select `New` > `Shortcut`. In the location field, paste the path to the `focus.bat` file. Click `Next`, name the shortcut `focus`, and click `Finish`. To change the icon of the shortcut, right-click on it, select `Properties`, click on `Change Icon`, and select the [_focus_ icon]() from the repository (`ico` format).
+3. To create a shortcut for the application (which you can add to your taskbar or Start Menu), right-click on a directory and select `New` > `Shortcut`. In the location field, paste the path to the `focus.bat` file. Click `Next`, name the shortcut `focus`, and click `Finish`. To change the icon of the shortcut, right-click on it, select `Properties`, click on `Change Icon`, and select the [_focus_ icon](https://github.com/alexandreavj/focus/blob/main/src/main/resources/com/focus/focus/logo.ico) from the repository (`ico` format).
 4. You can now run the application by double-clicking the shortcut or the `bat` file.
 
 #### macOS
@@ -36,7 +36,7 @@ java -jar path\to\focus.jar
 2. Search for `Get Specified Finder Items` and drag it to the workflow. Select the downloaded JAR file.
 3. Search for `Open Finder Items` and drag it to the workflow.
 4. Save the application as `focus.app` to `Applications` folder.
-5. Navigate to the `Applications` folder and right-click on the `focus.app` file. Select `Get Info` and click on the icon in the top-left corner. Download and open the [_focus_ icon]() from the repository (`png` format) and use `Command` + `A` followed by `Command` + `C` to copy the icon. Click on the icon in the `Get Info` window and use `Command` + `V` to paste the icon.
+5. Navigate to the `Applications` folder and right-click on the `focus.app` file. Select `Get Info` and click on the icon in the top-left corner. Download and open the [_focus_ icon](https://github.com/alexandreavj/focus/blob/main/src/main/resources/com/focus/focus/logo.png) from the repository (`png` format) and use `Command` + `A` followed by `Command` + `C` to copy the icon. Click on the icon in the `Get Info` window and use `Command` + `V` to paste the icon.
 6You now have _focus_ or your Mac's Launchpad.
 
 
@@ -59,7 +59,7 @@ You must follow this process if you are unable to build the JAR file using Intel
 1. Make sure you have JDK 22 or higher installed in your system, and if it is recognized by your system (you can check this by running `java -version` in your terminal).
 
 #### windows
-1. Go to [Maven's official website]() and follow the instructions to download and install Maven.
+1. Go to [Maven's official website](https://maven.apache.org) and follow the instructions to download and install Maven.
 2. Open the command line and navigate to the directory where the project was cloned.
 3. Run the following command to build the JAR file: `mvn clean install`.
 4. The JAR file will be located in the `target` directory of the project, with the name `focus-1.0-SNAPSHOT-shaded.jar`.
